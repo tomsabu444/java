@@ -1,0 +1,43 @@
+import java.util.Random;
+class RandomNum implements Runnable {
+static int random;
+Random rand = new Random();
+public void run() {
+random = rand.nextInt(25);
+System.out.println("Thread Name:RandomNum Thread and the Generated Number is " +
+random);
+}
+}
+class Even implements Runnable {
+public void run() {
+if (RandomNum.random % 2 == 0)
+System.out.println("Thread Name:Even Thread and " + RandomNum.random +" is even
+Number and Square of " + RandomNum.random + " is: "+(int)
+Math.pow(RandomNum.random, 2) + "\n");
+}
+}
+class Odd implements Runnable {
+public void run() {
+if (RandomNum.random % 2 != 0)
+System.out.println("Thread Name:Odd Thread and " + RandomNum.random +" is odd
+Number and Cube of " + RandomNum.random + " is: "+(int)
+Math.pow(RandomNum.random, 3) + "\n");
+}
+}
+class Mthread {
+public static void main(String args[]) {
+for (int i = 0; i < 10; i++) {
+Thread objX = new Thread(new RandomNum());
+Thread objY = new Thread(new Even());
+Thread objZ = new Thread(new Odd());
+try {
+Thread.sleep(1000);
+} catch (Exception e) {
+System.out.println(e.getMessage());
+}
+objX.start();
+objY.start();
+objZ.start();
+}
+}
+}
